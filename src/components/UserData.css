@@ -1,0 +1,33 @@
+p {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.userInfo{
+    display: inline-flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    min-width: 120px;
+    background: none;
+    color: white;
+}
+
+.userInfo:hover{
+    background-color: black;
+}
+
+.userUpdate{
+    display: inline-flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    min-width: 120px;
+}
+
+.btn-primary {
+    margin-top: 5px;
+}
+
+label {
+    background-color: white;
+}
+

@@ -1,0 +1,44 @@
+.meal{
+    background-color: black;
+}
+
+#save {
+    background-color: green;
+    float: right;
+}
+
+.recipeAdd {
+    margin-top: 8px;
+}
+
+.savingWindow {
+    background-color: deepskyblue;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    display: -moz-inline-box;
+}
+
+.saveMessage {
+    color: dodgerblue;
+}
+
+.wrongMessage {
+    color: red;
+}
+
+.wholeMeal {
+    background-image: url("https://img.pakamera.net/i1/1/209/patery-i-talerze-12521146_69692209.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+}
+
+.wholeMeal:hover {
+    border-color: yellow;
+}
+
+.calories {
+    color: white;
+}

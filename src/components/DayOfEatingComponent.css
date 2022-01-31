@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    flex-wrap : wrap;
+}
+
+.col {
+    min-width: 20%;
+    margin-right: 13px;
+}
+
+.allMeals {
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
+.info {
+    color: white;
+}

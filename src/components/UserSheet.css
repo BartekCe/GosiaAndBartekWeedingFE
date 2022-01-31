@@ -1,0 +1,35 @@
+.container {
+    display: inline-flex;
+    margin-left: 15px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.form {
+    margin-left: 1px;
+}
+
+.userSheet{
+    display: inline-flex;
+    margin-bottom: 13px;
+    background-image: url("https://fototapeta12.cz/themes/default-bootstrap/functions/timthumb.php?src=https://st.depositphotos.com/1013886/4018/i/950/depositphotos_40180799-stock-photo-healthy-eating-background.jpg&w=1023&h=681");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.userSheet:hover{
+    border-color: yellow;
+}
+
+.dayCard {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: black;
+}
+
+h1 {
+    color: white;
+    display: inline-flex;
+    margin-left: 13px;
+}
