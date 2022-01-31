@@ -59,6 +59,11 @@ export interface DayStats {
     carbohydrate: number
 }
 
+export interface WeekData {
+    weeklyCaloriesIntake: number,
+    currentCalories: number
+}
+
 export enum MealTag {
     BREAKFAST,
     LUNCH,

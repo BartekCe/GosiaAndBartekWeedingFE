@@ -15,17 +15,18 @@ const UserSheet = (user: User) => {
             <h1>{user.name}</h1>
             <div className="container">
                 <UserData
-                        key={user.id}
-                          id={user.id}
-                          name={user.name}
-                          startingWeight={user.startingWeight}
-                          currentWeight={user.currentWeight}
-                          goalWeight={user.goalWeight}
-                          weeklyCaloriesIntake={user.weeklyCaloriesIntake}
-                          dailyCaloriesIntake={user.dailyCaloriesIntake}
-                          dailyProtein={user.dailyProtein}
-                          dailyFat={user.dailyFat}
-                          dailyCarbohydrate={user.dailyCarbohydrate}/>
+                    key={user.id}
+                    id={user.id}
+                    name={user.name}
+                    startingWeight={user.startingWeight}
+                    currentWeight={user.currentWeight}
+                    goalWeight={user.goalWeight}
+                    weeklyCaloriesIntake={user.weeklyCaloriesIntake}
+                    dailyCaloriesIntake={user.dailyCaloriesIntake}
+                    dailyProtein={user.dailyProtein}
+                    dailyFat={user.dailyFat}
+                    dailyCarbohydrate={user.dailyCarbohydrate}
+                    dayId={dayId}/>
                 <DayOfEatingComponent className="dayCard" userId={user.id} dayId={dayId}
                                       dailyCalories={user.dailyCaloriesIntake} userName={user.name}/>
             </div>
