@@ -16,7 +16,6 @@ const Meal = (mealFromBE: any) => {
 
     useEffect(() => {
         fetchRecipes();
-        console.log("xD")
     }, [])
 
     const fetchRecipes = async () => {
