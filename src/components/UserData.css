@@ -7,9 +7,11 @@ p {
     display: inline-flex;
     align-items: flex-start;
     flex-wrap: nowrap;
-    min-width: 140px;
+    min-width: 180px;
+    min-height: 300px;
     background: none;
     color: white;
+    font-size: 15px
 }
 
 .userInfo:hover{
@@ -29,8 +31,5 @@ p {
 
 label {
     background-color: white;
-}
-.costam {
-
 }
 

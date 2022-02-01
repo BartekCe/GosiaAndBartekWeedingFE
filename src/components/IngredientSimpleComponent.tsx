@@ -1,7 +1,6 @@
 import React, {MutableRefObject, useEffect, useRef, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./IngredientSimpleComponent.css";
-import ingredient from "./Ingredient";
 
 const IngredientSimpleComponent = (props: any) => {
     let url = "http://localhost:8080/getIngredientsList"
@@ -11,12 +10,6 @@ const IngredientSimpleComponent = (props: any) => {
     const [ingredientList, setIngredientList] = useState<string[]>([])
     const [searchIngredients, setSearchIngredients] = useState<string[]>([])
     const inputRef = useRef()as MutableRefObject<HTMLInputElement>;
-    useEffect(()=> {
-        // inputRef.ad
-        document.addEventListener('click', (event) => {
-            // console.log(event.target);
-        })
-    }, [])
 
     useEffect(() => {
         fetchIngredientsList();
@@ -90,12 +83,11 @@ const IngredientSimpleComponent = (props: any) => {
                     })}
                 </ul>
                 </div>
-                <input id="grams" type="number"  autoComplete="off" className="form-control" value={grams}
-                       onChange={gramsChangeHandler} step="1"/>
+                <input id="grams" type="number"  autoComplete="off" className="form-control" placeholder={props.grams.toString() + "g"}
+                              onChange={gramsChangeHandler} step="1"/>
                 <button className="btn-danger" onClick={handleRemoveIngredient}>X</button>
             </div>
         }
-    // }
 
     return display(props.name)
 }

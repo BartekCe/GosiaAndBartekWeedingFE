@@ -89,11 +89,13 @@ const Meal = (mealFromBE: any) => {
             ingredient.name = data.name;
             ingredient.grams = data.grams;
         }
+        setMessage("")
     }
 
     const removeIngredient = (data: number) => {
         const newIngredients = ingredients.filter(ingredient => ingredient.number !== data);
         setIngredients(newIngredients)
+        setMessage("")
     }
 
     const handleShearingMeal = async () => {
@@ -162,7 +164,7 @@ const Meal = (mealFromBE: any) => {
                 <span>Are you sure?</span>
                 <br/>
                 <span>This recipe name will be: "{name}"</span>
-                <div>
+                <div className="d-flex justify-content-between">
                     <button type="button" className="btn-danger" onClick={onCloseWindow}>Close</button>
                     <button type="button" className="btn-primary" onClick={saveAsRecipeHandler}>Save</button>
                 </div>
@@ -184,13 +186,13 @@ const Meal = (mealFromBE: any) => {
             return (<div className="d-flex justify-content-between">
                 <button className="btn-outline-success" type="button" onClick={handleShearingMeal}>Copy
                     Gosia's {mealFromBE.mealTag}</button>
-                <button className="btn-primary" type="button" onClick={handleSave}> Save</button>
+                <button  className="btn-primary" type="button" onClick={handleSave}> Save</button>
             </div>)
         } else {
             return (<div className="d-flex justify-content-between">
                 <button className="btn-outline-success" type="button" onClick={handleShearingMeal}>Copy
                     Bartek's {mealFromBE.mealTag}</button>
-                <button className="btn-primary" type="button" onClick={handleSave}> Save</button>
+                <button  className="btn-primary" type="button" onClick={handleSave}> Save</button>
             </div>)
         }
     }

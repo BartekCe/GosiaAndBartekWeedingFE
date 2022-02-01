@@ -97,12 +97,12 @@ const UserData = (user: any) => {
                     <p>Goal Weight: {user.goalWeight}</p>
                     <p>Starting Weight: {user.startingWeight}  </p>
                     <p>Current Weight: {user.currentWeight}</p>
-                    <p>Weekly Calories: {weekData.currentCalories}/{weekData.weeklyCaloriesIntake}</p>
                     <p>Daily Calories: {dailyCalories}</p>
                     <p>Daily Proteins: {user.dailyProtein}</p>
                     <p>Daily Fat: {user.dailyFat}</p>
                     <p>Daily Carbohydrate: {user.dailyCarbohydrate}</p>
                     <button type="button" className="btn-outline-success" onClick={handleUpdate}>Update</button>
+                <p>Weekly Calories: {weekData.currentCalories}/{weekData.weeklyCaloriesIntake}</p>
                     {message}
                 </Card>)
         } else
