@@ -128,13 +128,12 @@ const DayOfEatingComponent = (props: any) => {
                 onLeftClick={changeDayOnYesterday}
                 onCurrentClick={goBackToCurrent} date={dayOfEating.date}/>
             <p>{message}</p>
-            {/*<p>{dayOfEating.meals.at(1)?.ingredients.get("1 ingredient")}</p>*/}
             <h3>{dayOfEating.dayTag}</h3>
             <div className="container">
                 {dayOfEating.meals.map((mealFromBE, index) =>
                     <div className="col">
                         <Meal
-                            key={index}
+                            key={mealFromBE.id}
                             onMealSave={updateStats}
                             userName={props.userName}
                             id={mealFromBE.id}

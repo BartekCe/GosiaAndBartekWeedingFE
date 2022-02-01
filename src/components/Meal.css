@@ -12,11 +12,11 @@
 }
 
 .savingWindow {
+    margin-top: 24px;
     background-color: deepskyblue;
     border-radius: 12px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
     position: absolute;
-    display: -moz-inline-box;
 }
 
 .saveMessage {
@@ -41,4 +41,8 @@
 
 .calories {
     color: white;
+}
+
+.btn-primary {
+    font-size: 15px
 }
