@@ -15,7 +15,8 @@ const UserData = (user: any) => {
     const [open, setOpen] = useState<boolean>(false)
     const [weekData, setWeekData] = useState<WeekData>({
         weeklyCaloriesIntake: user.weeklyCaloriesIntake,
-        currentCalories: 0
+        currentCalories: 0,
+        weightOnStart: 0
     })
 
     const currentWeightChangeHandler = (event: any) => {
@@ -74,7 +75,8 @@ const UserData = (user: any) => {
         console.log(data)
         setWeekData({
             currentCalories: data.currentCalories,
-            weeklyCaloriesIntake: data.weeklyCaloriesIntake
+            weeklyCaloriesIntake: data.weeklyCaloriesIntake,
+            weightOnStart: data.weightOnStart
         })
     }
 
@@ -94,15 +96,26 @@ const UserData = (user: any) => {
     const display = () => {
         if (!open) {
             return (<Card className="userInfo">
+                <div>
+                    <h4>Weight info:</h4>
                     <p>Goal Weight: {user.goalWeight}</p>
-                    <p>Starting Weight: {user.startingWeight}  </p>
+                    <p>Starting Weight: {user.startingWeight} </p>
+                    <p>Starting Week Weight: {weekData.weightOnStart}</p>
                     <p>Current Weight: {user.currentWeight}</p>
+                </div>
+                <div>
+                    <h4>Macro:</h4>
                     <p>Daily Calories: {dailyCalories}</p>
                     <p>Daily Proteins: {user.dailyProtein}</p>
                     <p>Daily Fat: {user.dailyFat}</p>
                     <p>Daily Carbohydrate: {user.dailyCarbohydrate}</p>
+                </div>
                     <button type="button" className="btn-outline-success" onClick={handleUpdate}>Update</button>
-                <p>Weekly Calories: {weekData.currentCalories}/{weekData.weeklyCaloriesIntake}</p>
+                <div>
+                    <h4>Current Week Calories</h4>
+                    <p>{weekData.currentCalories}/{weekData.weeklyCaloriesIntake}</p>
+                </div>
+
                     {message}
                 </Card>)
         } else

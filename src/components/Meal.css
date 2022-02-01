@@ -1,14 +1,11 @@
-.meal{
-    background-color: black;
-}
-
 #save {
     background-color: green;
     float: right;
 }
 
 .recipeAdd {
-    margin-top: 8px;
+    /*margin-top: 8px;*/
+    border: none;
 }
 
 .savingWindow {
@@ -33,6 +30,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     border: none;
+    min-height: 300px;
 }
 
 .wholeMeal:hover {
@@ -43,6 +41,7 @@
     color: white;
 }
 
-.btn-primary {
+.saveButton {
     font-size: 15px
 }
+

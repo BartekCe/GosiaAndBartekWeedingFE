@@ -10,7 +10,6 @@ const Meal = (mealFromBE: any) => {
     const [ingredients, setIngredients] = useState<IngredientSimple[]>(mealFromBE.ingredients)
     const [name, setName] = useState<string>("");
     const [recipes, setRecipes] = useState<Recipe[]>([])
-    const [searchRecipeName, setSearchRecipeName] = useState<string>("")
     const [searchRecipe, setSearchRecipe] = useState<Recipe[]>([])
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
@@ -58,8 +57,8 @@ const Meal = (mealFromBE: any) => {
     const handleSave = () => {
         let isIngredientsCorrect = true;
         if (ingredients.length === 0) {
-            setMessage("Cannot save empty meal")
-            isIngredientsCorrect = false
+            setMessage("Empty Meal Saved!")
+            isIngredientsCorrect = true
         }
         ingredients.forEach(ingredient => {
             if (ingredient.name === undefined) {
@@ -78,7 +77,6 @@ const Meal = (mealFromBE: any) => {
             }
         })
         if (isIngredientsCorrect) {
-            console.log("tutaj?")
             fetchSaveMeal()
         }
     }
@@ -136,8 +134,9 @@ const Meal = (mealFromBE: any) => {
         }
         await fetch(url, options).then(res => {
             if (res.ok) {
-                setMessage(`Recipe $name saved!`)
+                setMessage("Recipe '" +name+  "' saved!")
                 setIsOpen(false)
+                fetchRecipes()
             } else setMessage("some error")
         })
     }
@@ -172,7 +171,6 @@ const Meal = (mealFromBE: any) => {
     }
 
     const searchRecipeNameChangeHandler = (event: any) => {
-        setSearchRecipeName(event.target.value);
         const newRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(event.target.value))
         if (event.target.value === "") {
             setSearchRecipe([])
@@ -186,7 +184,7 @@ const Meal = (mealFromBE: any) => {
             return (<div className="d-flex justify-content-between">
                 <button className="btn-outline-success" type="button" onClick={handleShearingMeal}>Copy
                     Gosia's {mealFromBE.mealTag}</button>
-                <button  className="btn-primary" type="button" onClick={handleSave}> Save</button>
+                <button  className="btn-primary saveButton" type="button" onClick={handleSave}> Save</button>
             </div>)
         } else {
             return (<div className="d-flex justify-content-between">
@@ -209,7 +207,7 @@ const Meal = (mealFromBE: any) => {
       }
     }
 
-    return <Card className="wholeMeal">
+    return (<div><Card className="wholeMeal">
         <h2>{mealFromBE.mealTag}</h2>
         <div>
             <input ref={inputRef} autoComplete="off" id="search-bar" type="text" placeholder={"Recipe Search"}
@@ -239,18 +237,18 @@ const Meal = (mealFromBE: any) => {
             </div>
         )}
         <div>
-            <button className="btn-outline-success" type="button" onClick={handleAddingIngredient}>Add</button>
+            <button className="btn-outline-success" type="button" onClick={handleAddingIngredient}>Add new ingredient</button>
         </div>
         {buttons()}
-        <div className="recipeAdd">
-            <button className="btn-primary" onClick={onOpenWindow}>Add as a new Recipe</button>
-            <input placeholder="recipe name" autoComplete="off" onChange={nameChangeHandler}/>
-            {savingRecipeWindow()}
-        </div>
-
         <p className="calories">Calories: {mealFromBE.calories}</p>
         {displayMessage()}
     </Card>
+    <div className="recipeAdd">
+        <button className="btn-primary costam" onClick={onOpenWindow}>Add as a new Recipe</button>
+        <input placeholder="recipe name" autoComplete="off" onChange={nameChangeHandler}/>
+        {savingRecipeWindow()}
+
+    </div></div>)
 }
 
 export default Meal;
