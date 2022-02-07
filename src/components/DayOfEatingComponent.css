@@ -11,8 +11,13 @@
 .allMeals {
     margin-top: 13px;
     margin-bottom: 13px;
+    position: static;
 }
 
 .info {
     color: white;
+}
+
+.cosadasd {
+    position: relative;
 }

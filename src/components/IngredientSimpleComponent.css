@@ -3,7 +3,7 @@
     /*width: 50em;*/
 }
 
-.form-control {
+.dupa {
     /*background-color: greenyellow;*/
     /*display: flex;*/
     background: none;
@@ -13,7 +13,7 @@
     height: 30px;
 }
 
-.form-control:hover {
+.dupa:hover {
     background-color: yellow;
 }
 
@@ -33,5 +33,19 @@
 #closeButton {
     background-color: red;
 
+}
+
+.siamp{
+    margin-top: 0;
+}
+
+.search-ingredient {
+    text-align: left;
+    min-width: 160px;
+}
+
+.ingredient-info {
+    /*flex-wrap: wrap;*/
+    font-size: 9px;
 }
 

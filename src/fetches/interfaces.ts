@@ -36,6 +36,16 @@ export interface IngredientSimple {
     number: number
 }
 
+export interface Ingredient {
+    id: number,
+    name: string,
+    protein: number,
+    fat: number,
+    carbohydrate: number,
+    grams: number,
+    calories?: number
+}
+
 export interface Recipe {
     id: number
     name: string
