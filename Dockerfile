@@ -1,7 +1,7 @@
-FROM node:alpine as build
+FROM node:14.0-alpine as build
 
 WORKDIR /app
-COPY package.json ./
+COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
@@ -12,5 +12,5 @@ ADD nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 443
-CMD ["nginx", "-g", "deamon off;"]
+CMD ["nginx", "-g", "daemon off;"]
 
