@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {User} from "../fetches/interfaces";
 import UserSheet from "./UserSheet";
+import DropDownMenu from "./DropDownMenu";
 
 const UsersList = () => {
 
@@ -33,6 +34,7 @@ const UsersList = () => {
     },[])
 
     return <div>
+        <DropDownMenu/>
         {users.map((user, index) =>
             <UserSheet
                 key={index}

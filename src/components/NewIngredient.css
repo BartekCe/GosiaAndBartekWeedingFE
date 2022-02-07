@@ -1,0 +1,23 @@
+.ingredientForm {
+    max-width: 220px;
+    max-height: 200px;
+}
+
+ul {
+    margin-top: 12px;
+    list-style-type: none;
+}
+
+body {
+    position: relative;
+}
+
+.myInput {
+    max-height: 23px;
+}
+.myInput:hover{
+    background-color: yellow;
+}
+label {
+    font-size: 14px;
+}

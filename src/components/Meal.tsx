@@ -31,6 +31,22 @@ const Meal = (mealFromBE: any) => {
             grams: 0,
             number: size + 1,
         }])
+        setMessage("")
+    }
+
+    const handleRemoveIngredient = (ingredientA: IngredientSimple) => {
+        console.log(ingredients)
+        const newIngredients = ingredients.filter(ingredient => ingredient.number !== ingredientA.number);
+        console.log("new ingredients->" ,newIngredients)
+        newIngredients.forEach(ingredient => {
+            if (ingredient.number > ingredientA.number) {
+                ingredient.number = ingredient.number - 1;
+            }
+        })
+        setIngredients(newIngredients)
+
+        console.log("ingredients -> ", ingredients)
+        setMessage("")
     }
 
     const fetchSaveMeal = async () => {
@@ -64,9 +80,9 @@ const Meal = (mealFromBE: any) => {
             if (ingredient.name === undefined) {
                 setMessage("You cannot have ingredient with name 'new ingredient'")
                 isIngredientsCorrect = false
-            } else if (ingredient.name.toLowerCase().includes("ingredient")) {
-                setMessage("You cannot have ingredient with name 'ingredient'")
-                isIngredientsCorrect = false
+            // } else if (ingredient.name.toLowerCase().includes("ingredient")) {
+            //     setMessage("You cannot have ingredient with name 'ingredient'")
+            //     isIngredientsCorrect = false
             } else if (ingredient.name.length <= 2) {
                 setMessage("this ingredient has to short name: " + ingredient.number)
                 isIngredientsCorrect = false
@@ -82,7 +98,7 @@ const Meal = (mealFromBE: any) => {
     }
 
     const updateIngredient = (data: IngredientSimple) => {
-        let ingredient = ingredients.find((obj => obj.number === data.number));
+        let ingredient = ingredients.find((ingredient => ingredient.number === data.number));
         if (ingredient !== undefined) {
             ingredient.name = data.name;
             ingredient.grams = data.grams;
@@ -92,6 +108,11 @@ const Meal = (mealFromBE: any) => {
 
     const removeIngredient = (data: number) => {
         const newIngredients = ingredients.filter(ingredient => ingredient.number !== data);
+        newIngredients.forEach(ingredient => {
+            if (ingredient.number > data) {
+                ingredient.number = ingredient.number - 1;
+            }
+        })
         setIngredients(newIngredients)
         setMessage("")
     }
@@ -116,8 +137,8 @@ const Meal = (mealFromBE: any) => {
     }
 
     const nameChangeHandler = (event: any) => {
+        setMessage("")
         setName(event.target.value);
-        console.log((event.target.value))
     }
 
     const saveAsRecipeHandler = async () => {
@@ -134,7 +155,7 @@ const Meal = (mealFromBE: any) => {
         }
         await fetch(url, options).then(res => {
             if (res.ok) {
-                setMessage("Recipe '" +name+  "' saved!")
+                setMessage("Recipe '" + name + "' saved!")
                 setIsOpen(false)
                 fetchRecipes()
             } else setMessage("some error")
@@ -157,7 +178,6 @@ const Meal = (mealFromBE: any) => {
     }
 
     const savingRecipeWindow = () => {
-
         if (isOpen)
             return (<div className="savingWindow">
                 <span>Are you sure?</span>
@@ -171,6 +191,7 @@ const Meal = (mealFromBE: any) => {
     }
 
     const searchRecipeNameChangeHandler = (event: any) => {
+        setMessage("")
         const newRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(event.target.value))
         if (event.target.value === "") {
             setSearchRecipe([])
@@ -184,27 +205,52 @@ const Meal = (mealFromBE: any) => {
             return (<div className="d-flex justify-content-between">
                 <button className="btn-outline-success" type="button" onClick={handleShearingMeal}>Copy
                     Gosia's {mealFromBE.mealTag}</button>
-                <button  className="btn-primary saveButton" type="button" onClick={handleSave}> Save</button>
+                <button className="btn-primary saveButton" type="button" onClick={handleSave}> Save</button>
             </div>)
         } else {
             return (<div className="d-flex justify-content-between">
                 <button className="btn-outline-success" type="button" onClick={handleShearingMeal}>Copy
                     Bartek's {mealFromBE.mealTag}</button>
-                <button  className="btn-primary" type="button" onClick={handleSave}> Save</button>
+                <button className="btn-primary" type="button" onClick={handleSave}> Save</button>
             </div>)
         }
     }
 
     const displayMessage = () => {
-      if(message.toLowerCase().includes("save")){
-          return <Card className="saveMessage">
-              <span>{message}</span>
-          </Card>
-      } else {
-          return <Card className="wrongMessage">
-              <span>{message}</span>
-          </Card>
-      }
+        if (message.toLowerCase().includes("save") || message.toLowerCase().includes("copied")) {
+            return <Card className="saveMessage">
+                <span>{message}</span>
+            </Card>
+        } else if (message === "") {
+
+        } else {
+            return <Card className="wrongMessage">
+                <span>{message}</span>
+            </Card>
+        }
+    }
+
+    const displayIngredients = () => {
+        console.log(ingredients)
+        return(
+            ingredients.map((ingredient) =>
+                    <div className="d-flex">
+                        <IngredientSimpleComponent onIngredientRemove={removeIngredient} onIngredientChange={updateIngredient}
+                                                   key={ingredient.number} name={ingredient.name} grams={ingredient.grams}
+                                                   number={ingredient.number}/>
+                        <button className="btn-danger" onClick={() =>handleRemoveIngredient(ingredient)}>X</button>
+                    </div>
+                )
+        )
+    }
+
+    const displayMealInfo = () => {
+        if(ingredients.length > 0){
+            return (
+    <p className="calories">Cal: {mealFromBE.calories} P:{mealFromBE.protein} F:{mealFromBE.fat} C:{mealFromBE.carbohydrate}</p>
+            )
+        }
+
     }
 
     return (<div><Card className="wholeMeal">
@@ -229,26 +275,22 @@ const Meal = (mealFromBE: any) => {
                 })}
             </ul>
         </div>
-        {ingredients.map((ingredient, index) =>
-            <div>
-                <IngredientSimpleComponent onIngredientRemove={removeIngredient} onIngredientChange={updateIngredient}
-                                           key={index} name={ingredient.name} grams={ingredient.grams}
-                                           number={ingredient.number}/>
-            </div>
-        )}
+        {displayIngredients()}
         <div>
-            <button className="btn-outline-success" type="button" onClick={handleAddingIngredient}>Add new ingredient</button>
+            <button className="btn-outline-success" type="button" onClick={handleAddingIngredient}>Add new ingredient
+            </button>
         </div>
         {buttons()}
-        <p className="calories">Calories: {mealFromBE.calories}</p>
+        {displayMealInfo()}
         {displayMessage()}
     </Card>
-    <div className="recipeAdd">
-        <button className="btn-primary costam" onClick={onOpenWindow}>Add as a new Recipe</button>
-        <input placeholder="recipe name" autoComplete="off" onChange={nameChangeHandler}/>
-        {savingRecipeWindow()}
+        <div className="recipeAdd">
+            <button className="btn-primary" onClick={onOpenWindow}>Add as a new Recipe</button>
+            <input placeholder="recipe name" autoComplete="off" onChange={nameChangeHandler}/>
+            {savingRecipeWindow()}
+        </div>
 
-    </div></div>)
+    </div>)
 }
 
 export default Meal;

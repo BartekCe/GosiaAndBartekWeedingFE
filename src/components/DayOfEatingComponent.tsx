@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {ProgressBar} from "react-bootstrap"
 import {DayOfEating, DayStats, DayTag} from "../fetches/interfaces";
+import "@popperjs/core"
 import Meal from "./Meal";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./DayOfEatingComponent.css";
 import Navigation from "./Navigation";
+import DropDownMenu from "./DropDownMenu";
 
 const DayOfEatingComponent = (props: any) => {
     const [dayOfEating, setDayOfEating] = useState<DayOfEating>({
@@ -123,12 +125,18 @@ const DayOfEatingComponent = (props: any) => {
 
     return (<div className="allMeals">
             {createNewWeek()}
+            <div className="cosadasd">
+            </div>
             <Navigation
                 onRightClick={changeDayOnTomorrow}
                 onLeftClick={changeDayOnYesterday}
                 onCurrentClick={goBackToCurrent} date={dayOfEating.date}/>
             <p>{message}</p>
+            {/*<div className="row">*/}
             <h3>{dayOfEating.dayTag}</h3>
+                <div className="col-sm-10"/>
+                {/*<button className="btn-outline-success col-sm-2" type="button">Add new Ingredient to DB</button>*/}
+            {/*</div>*/}
             <div className="container">
                 {dayOfEating.meals.map((mealFromBE, index) =>
                     <div className="col">

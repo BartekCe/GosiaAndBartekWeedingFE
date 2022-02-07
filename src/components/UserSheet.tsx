@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {User} from "../fetches/interfaces";
 import Card from "../UI/Card";
 import DayOfEatingComponent from "./DayOfEatingComponent";
