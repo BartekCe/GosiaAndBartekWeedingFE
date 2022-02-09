@@ -2,11 +2,9 @@
 # Deploy:
 #
 ## on terminal in project location:
-##
 -1. "docker build -t weedingappfe:latest ."  
 ###
 ## on gcloud cli:
-##
 -1. gcloud auth login if needed
 ###
 -2. "docker tag weedingappfe{_version} gcr.io/gbweedingfe/weedingappfe{_version}"
@@ -15,7 +13,6 @@
 ###
 
 ## on cloud:
-##
 -1. go to https://console.cloud.google.com/gcr/images/gbweedingfe?project=gbweedingfe or Container Registry
 ###
 -2. copy pushed url(weedingappfe{_version})
@@ -29,3 +26,5 @@
 -6. check 'Allow unauthenticated invocations'
 ###
 -7. Change port if needed
+###
+-8. Delete previous service
