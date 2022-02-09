@@ -1,12 +1,12 @@
 ###
 
-#Deploy:
+## Deploy:
 ###
 -on terminal in project location:
 ###
 -1. "docker build -t weedingappfe:latest ."  
 ###
-on gcloud cli:
+## on gcloud cli:
 ###
 -1.gcloud auth login if needed
 ###
@@ -15,7 +15,7 @@ on gcloud cli:
 -3. "docker push gcr.io/gbweedingfe/weedingappfe{_version}" 
 ###
 
-on cloud:
+## on cloud:
 ###
 -1.go to https://console.cloud.google.com/gcr/images/gbweedingfe?project=gbweedingfe or Container Registry
 ###
