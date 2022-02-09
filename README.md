@@ -1,8 +1,8 @@
 ###
 
-## Deploy:
+### Deploy:
 ###
--on terminal in project location:
+## on terminal in project location:
 ###
 -1. "docker build -t weedingappfe:latest ."  
 ###
