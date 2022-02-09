@@ -17,7 +17,7 @@
 ###
 -2. copy pushed url(weedingappfe{_version})
 ###
--3. go to https://console.cloud.google.com/run?referrer=search&project=gbweedingbe or Cloud Run
+-3. go to https://console.cloud.google.com/run?referrer=search&project=gbweedingfe or Cloud Run
 ###
 -4.Create new service, paste url to 'container image url'
 ###
