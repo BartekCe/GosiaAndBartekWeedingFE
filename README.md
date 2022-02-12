@@ -7,7 +7,7 @@
 ## on gcloud cli:
 -1. gcloud auth login if needed
 ###
--2. "docker tag weedingappfe{_version} gcr.io/gbweedingfe/weedingappfe{_version}"
+-2. "docker tag weedingappfe{_version} gcr.io/weedingfe-341123/weedingappfe{_version}"
 ###
 -3. "docker push gcr.io/gbweedingfe/weedingappfe{_version}" 
 ###
