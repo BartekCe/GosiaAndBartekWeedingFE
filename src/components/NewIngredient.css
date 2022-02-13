@@ -1,15 +1,15 @@
 .ingredientForm {
     max-width: 220px;
     max-height: 200px;
+    display: inherit;
 }
 
 ul {
-    margin-top: 12px;
     list-style-type: none;
 }
 
 body {
-    position: relative;
+    position: absolute;
 }
 
 .myInput {

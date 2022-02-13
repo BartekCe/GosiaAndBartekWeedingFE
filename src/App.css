@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+  background: url("https://a.allegroimg.com/original/118fc4/76a623864516859840f2bab7259a/LAKA-KWIETNA-Trawnik-KWIATOWY-5kg-MIX-MIODODAJNE") no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100%;
+  min-width: 1024px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 
 .App-logo {

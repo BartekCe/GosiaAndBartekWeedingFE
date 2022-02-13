@@ -1,8 +1,9 @@
 import React, {MutableRefObject, useEffect, useRef, useState} from "react";
 import "./DropDownMenu.css"
 import NewIngredient from "./NewIngredient";
+import {useUrl} from "../general/general";
 
-const DropDownMenu = () => {
+const DropDownMenu = (props: any) => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [addIngredientOpen, setAddIngredientOpen] = useState<boolean>(false);
     const [updateIngredientOpen, setUpdateIngredient] = useState<boolean>(false);
@@ -12,7 +13,7 @@ const DropDownMenu = () => {
     const [name, setName] = useState<string>("")
 
     const fetchIngredientsList = async () => {
-        let url = "http://localhost:8080/getIngredientsList"
+        let url = `${useUrl}/ingredient/getAllNames`
         const response = await fetch(url);
         const data = await response.json();
         setIngredientList(data);
@@ -59,9 +60,7 @@ const DropDownMenu = () => {
     const displayAddIngredient = () => {
       if(addIngredientOpen){
           return(
-              <div className="ingredient">
                   <NewIngredient id={0} name={"new ingredient"} protein={0} fat={0} carbohydrate={0} grams={100}/>
-              </div>
           )
       }
     }
@@ -82,11 +81,11 @@ const DropDownMenu = () => {
     const asdasd = () => {
         if (updateIngredientOpen) {
             return (
-                <div className="search-bar-dropdown">
+                <div className="search-bar-dropdown lala">
                     <div>
                         <input ref={inputRef} autoComplete="off" id="search-bar" type="text"
                                className="form-control cycki" placeholder={"name"} onChange={nameChangeHandler}/>
-                        <ul id='results' className="list-group cycuszki">
+                        <ul id='results' className="list-group">
                             {searchIngredients.map((ingredient, index) => {
                                 if(index<5){
                                 return (
@@ -99,7 +98,7 @@ const DropDownMenu = () => {
                                             //zmienić na przekierowanie do updatu od razu!
                                             setSearchIngredients([])
                                         }}
-                                        className="list-group-item btn-outline-success cycki">
+                                        className="list-group-item btn-outline-success">
                                         {ingredient}
                                     </button>)
                             }})}
@@ -114,14 +113,14 @@ const DropDownMenu = () => {
 
     const displayManuButtons = () => {
         if (menuOpen) {
-            return (<div className="menu-buttons">
-                <div className="col">
+            return (<div className="menuuuu">
+                <div >
                     <div>
-                        <div className="col">
+                        <div className="container menuuuu">
                             <button className="btn-outline-success menu-button" type="button" onClick={handleAddIngredientClick}>Ad new ingredient to DB</button>
                             {displayAddIngredient()}
                         </div>
-                        <div className="col">
+                        <div className="container">
                             <button className="btn-outline-success menu-button" type="button" onClick={handleUpdateIngredientClick}>Update ingredient</button>
                             {asdasd()}
                         </div>
@@ -141,12 +140,12 @@ const DropDownMenu = () => {
 
     return (
         <div>
-            <div className="row">
+            <div>
 
-                <button type="button" className="btn-outline-success col-sm-1" onClick={handleMenuClick}>
+                <button type="button" className="btn-outline-success" onClick={handleMenuClick}>
                     Menu
                 </button>
-                <div className="col-sm-10"/>
+                <div/>
             </div>
             {displayManuButtons()}
         </div>

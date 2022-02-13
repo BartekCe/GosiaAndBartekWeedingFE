@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Card from "../UI/Card";
 import "./UserData.css"
 import {WeekData} from "../fetches/interfaces";
+import {useUrl} from "../general/general";
 
 const UserData = (user: any) => {
 
@@ -39,7 +40,7 @@ const UserData = (user: any) => {
     }
 
     const handleSubmit = async (event: any) => {
-        let url = "http://localhost:8080/updateUser"
+        let url = `${useUrl}/updateUser`
         const data = {
             id: user.id,
             name: user.name,
@@ -69,7 +70,7 @@ const UserData = (user: any) => {
     }
 
     const fetchWeekInfo = async () => {
-        let url = "http://localhost:8080/getWeek/" + user.dayId;
+        let url = `${useUrl}/week/get/${user.dayId}`;
         const response = await fetch(url);
         const data = await response.json();
         console.log(data)

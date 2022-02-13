@@ -6,7 +6,7 @@ import Meal from "./Meal";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./DayOfEatingComponent.css";
 import Navigation from "./Navigation";
-import DropDownMenu from "./DropDownMenu";
+import {useUrl} from "../general/general";
 
 const DayOfEatingComponent = (props: any) => {
     const [dayOfEating, setDayOfEating] = useState<DayOfEating>({
@@ -28,7 +28,7 @@ const DayOfEatingComponent = (props: any) => {
     }, [])
 
     const fetchDayOfEatingHandler = async (dayId: number) => {
-        let url = `http://localhost:8080/getDay/${dayId}`;
+        let url = `${useUrl}/dayOfEating/get/${dayId}`;
         const response = await fetch(url);
         const data = await response.json();
         setDayOfEating(data);
@@ -51,7 +51,7 @@ const DayOfEatingComponent = (props: any) => {
     }
 
     const fetchIfDayExist = async (dayId: number) => {
-        let url = `http://localhost:8080/isDayExist/${dayId}`
+        let url = `${useUrl}/dayOfEating/checkIfExist/${dayId}`
         const response = await fetch(url);
         const data = await response.json();
         if (data === true) {
@@ -61,7 +61,7 @@ const DayOfEatingComponent = (props: any) => {
     }
 
     const fetchCreateNewWeek = async () => {
-        let url = "http://localhost:8080/createNewWeek/" + props.userId;
+        let url = `${useUrl}/user/createNewWeek/${props.userId}`
         const options = {
             method: 'POST'
         }
@@ -125,8 +125,6 @@ const DayOfEatingComponent = (props: any) => {
 
     return (<div className="allMeals">
             {createNewWeek()}
-            <div className="cosadasd">
-            </div>
             <Navigation
                 onRightClick={changeDayOnTomorrow}
                 onLeftClick={changeDayOnYesterday}

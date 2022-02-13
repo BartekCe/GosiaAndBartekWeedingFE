@@ -4,8 +4,9 @@ button {
 }
 
 .menu-buttons {
-    position: absolute;
+    /*position: absolute;*/
     display: block;
+    position: inherit;
 }
 
 .menu {
@@ -18,7 +19,7 @@ button {
 }
 
 .ingredient {
-    display: block;
+    position: center;
 }
 
 .cycki{
@@ -29,4 +30,13 @@ button {
 
 .cycuszki {
     margin-top: 0;
+}
+
+.lala{
+    background-color: white;
+    display: inherit;
+    max-width: 150px;
+}
+.menuuuu {
+    position: absolute;
 }

@@ -2,6 +2,7 @@ import React, {MutableRefObject, useEffect, useRef, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./IngredientSimpleComponent.css";
 import {Ingredient} from "../fetches/interfaces";
+import {useUrl} from "../general/general";
 
 const IngredientSimpleComponent = (props: any) => {
 
@@ -23,7 +24,7 @@ const IngredientSimpleComponent = (props: any) => {
     }, [])
 
     const fetchIngredientsList = async () => {
-        let url = "http://localhost:8080/getIngredients"
+        let url = `${useUrl}/ingredient/getAll`
         const response = await fetch(url);
         const data = await response.json();
         setIngredientList(data);

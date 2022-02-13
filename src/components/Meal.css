@@ -30,6 +30,7 @@
     background-size: cover;
     border: none;
     min-height: 300px;
+    position: relative;
 }
 
 .wholeMeal:hover {

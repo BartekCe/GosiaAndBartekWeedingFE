@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {User} from "../fetches/interfaces";
 import UserSheet from "./UserSheet";
-import DropDownMenu from "./DropDownMenu";
+import "./UsersList.css"
+import {useUrl} from "../general/general";
 
 const UsersList = () => {
 
     const [users, setUsers] = useState<User[]>([]);
 
     const fetchUsersHandler = async () => {
-        let url = 'http://localhost:8080/getUsers';
+        let url = `${useUrl}/user/getAll`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -33,8 +34,7 @@ const UsersList = () => {
         fetchUsersHandler();
     },[])
 
-    return <div>
-        <DropDownMenu/>
+    return <div className="col mainThing">
         {users.map((user, index) =>
             <UserSheet
                 key={index}
