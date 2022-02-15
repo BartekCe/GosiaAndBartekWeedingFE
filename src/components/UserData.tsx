@@ -40,7 +40,7 @@ const UserData = (user: any) => {
     }
 
     const handleSubmit = async (event: any) => {
-        let url = `${useUrl}/updateUser`
+        let url = `${useUrl}/user/update`
         const data = {
             id: user.id,
             name: user.name,
