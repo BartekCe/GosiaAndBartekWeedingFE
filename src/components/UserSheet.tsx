@@ -5,6 +5,7 @@ import DayOfEatingComponent from "./DayOfEatingComponent";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./UserSheet.css"
 import UserData from "./UserData";
+import DropDownMenu from "./DropDownMenu";
 
 const UserSheet = (user: User) => {
     let utc = new Date().toJSON().slice(0, 10).replace(/-/g, '');

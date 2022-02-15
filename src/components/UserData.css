@@ -4,9 +4,9 @@ p {
 }
 
 .userInfo{
-    display: inline-flex;
-    align-items: flex-start;
-    flex-wrap: nowrap;
+    /*display: inline-flex;*/
+    /*align-items: flex-start;*/
+    /*flex-wrap: nowrap;*/
     min-width: 180px;
     min-height: 300px;
     background: none;

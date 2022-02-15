@@ -2,10 +2,11 @@ import React, {useState} from "react";
 import Card from "../UI/Card";
 import "./NewIngredient.css"
 import {Ingredient} from "../fetches/interfaces";
+import {useUrl} from "../general/general";
 
 const NewIngredient = (props: Ingredient) => {
 
-    let url = "http://localhost:8080/addIngredient";
+    let url = `${useUrl}/ingredient/add`;
     const [id, setId] = useState<number>(props.id)
     const [enteredName, setEnteredName] = useState<string>(props.name);
     const [enteredProtein, setEnteredProtein] = useState<number>(props.protein);

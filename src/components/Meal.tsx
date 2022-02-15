@@ -3,6 +3,7 @@ import Card from "../UI/Card";
 import {IngredientSimple, Recipe} from "../fetches/interfaces";
 import "./Meal.css";
 import IngredientSimpleComponent from "./IngredientSimpleComponent";
+import {useUrl} from "../general/general";
 
 const Meal = (mealFromBE: any) => {
     const [message, setMessage] = useState<string>("")
@@ -18,7 +19,7 @@ const Meal = (mealFromBE: any) => {
     }, [])
 
     const fetchRecipes = async () => {
-        let url = "http://localhost:8080/getRecipes"
+        let url = `${useUrl}/recipe/getAll`
         const response = await fetch(url);
         const data = await response.json();
         setRecipes(data);
@@ -33,6 +34,8 @@ const Meal = (mealFromBE: any) => {
         }])
         setMessage("")
     }
+
+
 
     const handleRemoveIngredient = (ingredientA: IngredientSimple) => {
         console.log(ingredients)
@@ -50,7 +53,7 @@ const Meal = (mealFromBE: any) => {
     }
 
     const fetchSaveMeal = async () => {
-        let url = "http://localhost:8080/updateMeal";
+        let url = `${useUrl}/meal/update`;
         const options = {
             method: 'PUT',
             headers: {
@@ -118,7 +121,7 @@ const Meal = (mealFromBE: any) => {
     }
 
     const handleShearingMeal = async () => {
-        let url = "http://localhost:8080/copyMeal";
+        let url = `${useUrl}/user/copyMeal`;
         const options = {
             method: 'POST',
             headers: {
@@ -142,7 +145,7 @@ const Meal = (mealFromBE: any) => {
     }
 
     const saveAsRecipeHandler = async () => {
-        let url = "http://localhost:8080/addRecipe"
+        let url = `${useUrl}/recipe/add`
         const options = {
             method: 'POST',
             headers: {
