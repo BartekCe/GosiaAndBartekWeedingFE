@@ -1,12 +1,10 @@
-import React, {useState} from "react";
+import React, {MutableRefObject, useEffect, useRef, useState} from "react";
 import Card from "../UI/Card";
 import "./NewIngredient.css"
 import {Ingredient} from "../fetches/interfaces";
 import {useUrl} from "../general/general";
 
 const NewIngredient = (props: Ingredient) => {
-
-    let url = `${useUrl}/ingredient/add`;
     const [id, setId] = useState<number>(props.id)
     const [enteredName, setEnteredName] = useState<string>(props.name);
     const [enteredProtein, setEnteredProtein] = useState<number>(props.protein);
@@ -14,10 +12,17 @@ const NewIngredient = (props: Ingredient) => {
     const [enteredCarbohydrate, setEnteredCarbohydrate] = useState<number>(props.carbohydrate);
     const [enteredGrams, setEnteredGrams] = useState<number>(props.grams);
     const [statusMessage, setStatusMessage] = useState<string>("");
+    const calories = props.calories;
+    const inputIngredientNameRef = useRef()as MutableRefObject<HTMLInputElement>;
 
-    const handleSubmit = async (event: any) => {
+    useEffect(()=>{
+        inputIngredientNameRef.current.focus()
+    },[id])
+
+    const handleSave = async (event: any) => {
+        let url = `${useUrl}/ingredient/add`;
         event.preventDefault();
-        await fetch(url, options)
+        await fetch(url, optionsPOST)
             .then(res => {
                 if (res.ok) {
                     setStatusMessage("'" + enteredName + "' Saved!")
@@ -32,6 +37,36 @@ const NewIngredient = (props: Ingredient) => {
             })
     }
 
+    const handleUpdate = async (event: any) => {
+        let url = `${useUrl}/ingredient/update`;
+        event.preventDefault();
+        await fetch(url, optionsPUT)
+            .then(res => {
+                if(!res.ok){
+                    setStatusMessage("some error :(")
+                    throw Error(`could not update the data from that resource -> "${url}" `)
+                } else {
+                    setStatusMessage(`"${enteredName}" updated!`)
+                }
+            })
+    }
+
+    const handleDelete = async (event:any) => {
+        event.preventDefault();
+        let url = `${useUrl}/ingredient/delete/${props.id}`;
+        await fetch(url, {
+            method: 'DELETE',
+        })
+            .then(res => {
+                if(!res.ok){
+                    setStatusMessage("some error :(")
+                    throw Error(`could not delete the data from that resource -> "${url}" `)
+                } else {
+                    setStatusMessage(`"${enteredName}" deleted!`)
+                }
+            })
+    }
+
     const newIngredient = () => {
         setId(0)
         setEnteredName("new ingredient");
@@ -42,6 +77,7 @@ const NewIngredient = (props: Ingredient) => {
 
     }
     let data = {
+        id: id,
         name: enteredName,
         protein: enteredProtein,
         fat: enteredFat,
@@ -49,8 +85,15 @@ const NewIngredient = (props: Ingredient) => {
         grams: enteredGrams
     }
 
-    const options = {
+    const optionsPOST = {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }
+    const optionsPUT = {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -63,7 +106,6 @@ const NewIngredient = (props: Ingredient) => {
     }
     const proteinChangeHandler = (event: any) => {
         setEnteredProtein(event.target.value)
-        console.log(enteredProtein)
     }
     const fatChangeHandler = (event: any) => {
         setEnteredFat(event.target.value)
@@ -74,12 +116,14 @@ const NewIngredient = (props: Ingredient) => {
     const gramsChangeHandler = (event: any) => {
         setEnteredGrams(event.target.value)
     }
+
+    if(id===0)
     return (<Card className="ingredientForm">
-        <form autoComplete="off" id="ingredient" onSubmit={handleSubmit}>
+        <form autoComplete="off" id="ingredient">
             <ul className="col">
                 <li className="d-flex justify-content-between">
                     <label>Name:</label>
-                    <input className="form-control myInput" id="1" placeholder={enteredName} onChange={nameChangeHandler} type="text"/>
+                    <input ref={inputIngredientNameRef} className="form-control myInput" id="1" placeholder={enteredName} onChange={nameChangeHandler} type="text"/>
                 </li>
                 <li className="d-flex justify-content-between">
                     <label>grams:</label>
@@ -98,13 +142,49 @@ const NewIngredient = (props: Ingredient) => {
                     <label>Carbohydrate:</label>
                     <input className="form-control myInput" id="5" placeholder={enteredCarbohydrate.toString()} onChange={carbohydrateChangeHandler} type="number" step=".01"/>
                 </li>
-
+                <button onClick={handleSave} className="btn-primary">Save</button>
+                <p>{statusMessage}</p>
             </ul>
-            <button type="submit" className="btn-primary">Save</button>
-            <p>{statusMessage}</p>
         </form>
 
     </Card>)
+    else return (
+        <Card className="ingredientForm">
+            <form autoComplete="off" id="ingredient">
+                <ul className="col">
+                    <li className="d-flex justify-content-between">
+                        <label>Name:</label>
+                        <input ref={inputIngredientNameRef} className="form-control myInput" id="1" defaultValue={enteredName} onChange={nameChangeHandler} type="text"/>
+                    </li>
+                    <li className="d-flex justify-content-between">
+                        <label>grams:</label>
+                        <input className="form-control myInput" id="6" onChange={gramsChangeHandler} value={enteredGrams} type="number"
+                               step="1"/>
+                    </li>
+                    <li className="d-flex justify-content-between">
+                        <label>Protein:</label>
+                        <input className="form-control myInput" id="3" defaultValue={enteredProtein.toString()} onChange={proteinChangeHandler} type="number" step=".01"/>
+                    </li>
+                    <li className="d-flex justify-content-between">
+                        <label>Fat:</label>
+                        <input className="form-control myInput" id="4" defaultValue={enteredFat.toString()} onChange={fatChangeHandler} type="number" step=".01"/>
+                    </li>
+                    <li className="d-flex justify-content-between">
+                        <label>Carbohydrate:</label>
+                        <input className="form-control myInput" id="5" defaultValue={enteredCarbohydrate.toString()} onChange={carbohydrateChangeHandler} type="number" step=".01"/>
+                    </li>
+                    <li className="d-flex justify-content-between">
+                        <label>Calories:</label>
+                        <input  disabled={true} className="form-control myInput" id="5" value={Number(calories).toString()} type="number"/>
+                    </li>
+                    <div className="d-flex justify-content-between">
+                        <button onClick={handleDelete} className="btn-danger">Delete</button>
+                    <button onClick={handleUpdate} className="btn-primary">Update</button>
+                    </div>
+                    <p>{statusMessage}</p>
+                </ul>
+            </form>
+        </Card>)
 }
 
 export default NewIngredient;

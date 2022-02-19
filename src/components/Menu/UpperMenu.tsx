@@ -4,10 +4,9 @@ import MenuItem from "./MenuItem";
 
 const UpperMenu = (props:any) => {
   return(
-      <div className="upperMenu">
-        <ul className="upperMenu-nav">
+      <div className="d-flex">
             <MenuItem text="Add Ingredient"/>
-        </ul>
+            <MenuItem text="Update Ingredient"/>
       </div>
   )
 }

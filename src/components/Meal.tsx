@@ -4,26 +4,17 @@ import {IngredientSimple, Recipe} from "../fetches/interfaces";
 import "./Meal.css";
 import IngredientSimpleComponent from "./IngredientSimpleComponent";
 import {useUrl} from "../general/general";
+import {useRecipeFetch} from "../util/useRecipeFetch";
 
 const Meal = (mealFromBE: any) => {
     const [message, setMessage] = useState<string>("")
-    const inputRef = useRef() as MutableRefObject<HTMLInputElement>;
+    const inputRecipeSearchRef = useRef() as MutableRefObject<HTMLInputElement>;
+    const inputRecipeSaveRef = useRef() as MutableRefObject<HTMLInputElement>;
     const [ingredients, setIngredients] = useState<IngredientSimple[]>(mealFromBE.ingredients)
     const [name, setName] = useState<string>("");
-    const [recipes, setRecipes] = useState<Recipe[]>([])
     const [searchRecipe, setSearchRecipe] = useState<Recipe[]>([])
     const [isOpen, setIsOpen] = useState<boolean>(false)
-
-    useEffect(() => {
-        fetchRecipes();
-    }, [])
-
-    const fetchRecipes = async () => {
-        let url = `${useUrl}/recipe/getAll`
-        const response = await fetch(url);
-        const data = await response.json();
-        setRecipes(data);
-    }
+    const recipes = useRecipeFetch();
 
     const handleAddingIngredient = () => {
         const size = ingredients.length;
@@ -33,22 +24,23 @@ const Meal = (mealFromBE: any) => {
             number: size + 1,
         }])
         setMessage("")
+        focusOnAddedIngredient(size +1)
+    }
+
+    const focusOnAddedIngredient = (id: number) =>{
+        return id;
     }
 
 
 
     const handleRemoveIngredient = (ingredientA: IngredientSimple) => {
-        console.log(ingredients)
         const newIngredients = ingredients.filter(ingredient => ingredient.number !== ingredientA.number);
-        console.log("new ingredients->" ,newIngredients)
         newIngredients.forEach(ingredient => {
             if (ingredient.number > ingredientA.number) {
                 ingredient.number = ingredient.number - 1;
             }
         })
         setIngredients(newIngredients)
-
-        console.log("ingredients -> ", ingredients)
         setMessage("")
     }
 
@@ -160,7 +152,7 @@ const Meal = (mealFromBE: any) => {
             if (res.ok) {
                 setMessage("Recipe '" + name + "' saved!")
                 setIsOpen(false)
-                fetchRecipes()
+                inputRecipeSaveRef.current.value="";
             } else setMessage("some error")
         })
     }
@@ -205,7 +197,7 @@ const Meal = (mealFromBE: any) => {
     }
     const buttons = () => {
         if (mealFromBE.userName === "Bartek") {
-            return (<div className="d-flex justify-content-between">
+            return (<div className="d-flex justify-content-between mealButtons">
                 <button className="btn-outline-success" type="button" onClick={handleShearingMeal}>Copy
                     Gosia's {mealFromBE.mealTag}</button>
                 <button className="btn-primary saveButton" type="button" onClick={handleSave}> Save</button>
@@ -234,13 +226,12 @@ const Meal = (mealFromBE: any) => {
     }
 
     const displayIngredients = () => {
-        console.log(ingredients)
         return(
             ingredients.map((ingredient) =>
-                    <div className="d-flex">
+                    <div className="d-flex" key={ingredient.number}>
                         <IngredientSimpleComponent onIngredientRemove={removeIngredient} onIngredientChange={updateIngredient}
                                                    key={ingredient.number} name={ingredient.name} grams={ingredient.grams}
-                                                   number={ingredient.number}/>
+                                                   number={ingredient.number} onIngreddientAdd={focusOnAddedIngredient}/>
                         <button className="btn-danger" onClick={() =>handleRemoveIngredient(ingredient)}>X</button>
                     </div>
                 )
@@ -250,7 +241,7 @@ const Meal = (mealFromBE: any) => {
     const displayMealInfo = () => {
         if(ingredients.length > 0){
             return (
-    <p className="calories">Cal: {mealFromBE.calories} P:{mealFromBE.protein} F:{mealFromBE.fat} C:{mealFromBE.carbohydrate}</p>
+    <p className="calories">Cal: {Math.round(mealFromBE.calories)} P:{Math.round(mealFromBE.protein)} F:{Math.round(mealFromBE.fat)} C:{Math.round(mealFromBE.carbohydrate)}</p>
             )
         }
 
@@ -259,7 +250,7 @@ const Meal = (mealFromBE: any) => {
     return (<div><Card className="wholeMeal">
         <h2>{mealFromBE.mealTag}</h2>
         <div>
-            <input ref={inputRef} autoComplete="off" id="search-bar" type="text" placeholder={"Recipe Search"}
+            <input ref={inputRecipeSearchRef} className="recipeSearch" autoComplete="off" id="search-bar" type="text" placeholder={"Recipe Search"}
                    onChange={searchRecipeNameChangeHandler}/>
             <ul id='results' className="list-group">
                 {searchRecipe.map((recipe, index) => {
@@ -268,7 +259,7 @@ const Meal = (mealFromBE: any) => {
                             key={index}
                             type="button"
                             onClick={() => {
-                                inputRef.current.value = recipe.name
+                                inputRecipeSearchRef.current.value = recipe.name
                                 setIngredients(recipe.ingredients)
                                 setSearchRecipe([])
                             }}
@@ -280,8 +271,11 @@ const Meal = (mealFromBE: any) => {
         </div>
         {displayIngredients()}
         <div>
-            <button className="btn-outline-success" type="button" onClick={handleAddingIngredient}>Add new ingredient
-            </button>
+            {ingredients.length===0 && <button className="btn-outline-success addFirstIngredient" type="button" onClick={handleAddingIngredient}>
+                Start the meal!
+            </button>}
+            {ingredients.length !==0 &&  <button className="btn-outline-success addNewIngredientButton" type="button" onClick={handleAddingIngredient}>Add new ingredient</button>}
+
         </div>
         {buttons()}
         {displayMealInfo()}
@@ -289,7 +283,7 @@ const Meal = (mealFromBE: any) => {
     </Card>
         <div className="recipeAdd">
             <button className="btn-primary" onClick={onOpenWindow}>Add as a new Recipe</button>
-            <input placeholder="recipe name" autoComplete="off" onChange={nameChangeHandler}/>
+            <input ref={inputRecipeSaveRef} placeholder="recipe name" autoComplete="off" onChange={nameChangeHandler}/>
             {savingRecipeWindow()}
         </div>
 

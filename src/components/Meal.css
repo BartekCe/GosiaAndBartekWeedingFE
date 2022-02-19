@@ -4,6 +4,7 @@
 }
 
 .recipeAdd {
+
     /*margin-top: 8px;*/
     border: none;
 }
@@ -42,11 +43,40 @@
     background: none;
 }
 
+.calories:hover {
+    background-color: black;
+}
+
 .saveButton {
     font-size: 15px
 }
 
 .mealInfo {
     background: black;
+}
+
+.recipeSearch {
+    background: none;
+    margin-bottom: 5px;
+}
+
+.recipeSearch::placeholder {
+    color: green;
+}
+.recipeSearch::placeholder:hover{
+    color: black;
+}
+
+.recipeSearch:hover {
+    background-color: white;
+}
+
+.addNewIngredientButton {
+    margin-bottom: 5px;
+}
+
+.addFirstIngredient {
+    margin-bottom: 50px;
+    margin-top: 10px;
 }
 

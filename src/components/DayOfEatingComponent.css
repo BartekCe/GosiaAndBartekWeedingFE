@@ -14,9 +14,15 @@
     position: relative;
 }
 
-.info {
+.dayInfo {
     color: white;
 }
+
+.dayInfo:hover {
+    background-color: black;
+}
+
+
 
 /*.cosadasd {*/
 /*    position: relative;*/

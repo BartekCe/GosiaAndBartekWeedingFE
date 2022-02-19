@@ -2,33 +2,16 @@ import React, {MutableRefObject, useEffect, useRef, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./IngredientSimpleComponent.css";
 import {Ingredient} from "../fetches/interfaces";
-import {useUrl} from "../general/general";
+import {useIngredientsFetch} from "../util/useIngredientsFetch";
 
 const IngredientSimpleComponent = (props: any) => {
 
     const [grams, setGrams] = useState<number>(props.grams);
     const [name, setName] = useState<string>(props.name);
-    const [ingredientList, setIngredientList] = useState<Ingredient[]>([{
-        id: 0,
-        name: "",
-        protein: 0,
-        fat: 0,
-        carbohydrate: 0,
-        grams: 0
-    }])
     const [searchIngredients, setSearchIngredients] = useState<Ingredient[]>([])
-    const inputRef = useRef()as MutableRefObject<HTMLInputElement>;
-
-    useEffect(() => {
-        fetchIngredientsList();
-    }, [])
-
-    const fetchIngredientsList = async () => {
-        let url = `${useUrl}/ingredient/getAll`
-        const response = await fetch(url);
-        const data = await response.json();
-        setIngredientList(data);
-    }
+    const inputIngredientNameRef = useRef()as MutableRefObject<HTMLInputElement>;
+    const inputIngredientGramsRef = useRef()as MutableRefObject<HTMLInputElement>;
+    const ingredientList = useIngredientsFetch();
 
     const gramsChangeHandler = (event: any) => {
         setGrams(event.target.value);
@@ -38,15 +21,23 @@ const IngredientSimpleComponent = (props: any) => {
             number: props.number
         })
     }
+
+    useEffect(() => {
+        inputIngredientNameRef.current.focus();
+    },[props.onIngreddientAdd])
+
+    const focusOnGrams = () => {
+        inputIngredientGramsRef.current.focus();
+    }
+
     const nameChangeHandler = (event: any) => {
-        console.log(event.target.value)
         setName(event.target.value);
         props.onIngredientChange({
             name: event.target.value,
             grams: grams,
             number: props.number
         })
-        const newIngredientList = ingredientList.filter(ingredient => ingredient.name.toLowerCase().includes(event.target.value))
+        const newIngredientList = ingredientList.filter(ingredient => ingredient.name.toLowerCase().includes(event.target.value.toLowerCase()))
         if (event.target.value === "") {
             setSearchIngredients([])
         }
@@ -59,7 +50,6 @@ const IngredientSimpleComponent = (props: any) => {
     }
 
     const nameAfterClickHandler = (name:any) => {
-        console.log(name)
         setName(name)
         props.onIngredientChange({
             name: name,
@@ -83,7 +73,7 @@ const IngredientSimpleComponent = (props: any) => {
             return <div className="search-bar-dropdown">
                 <div>
                 <input
-                    ref={inputRef}
+                    ref={inputIngredientNameRef}
                     autoComplete="off" id="search-bar" type="text" className="form-control dupa" placeholder={name} onChange={nameChangeHandler}/>
                 <ul id='results' className="list-group siamp">
                     {searchIngredients.map((ingredient, index) => {
@@ -93,9 +83,10 @@ const IngredientSimpleComponent = (props: any) => {
                                     key={index}
                                     type="button"
                                     onClick={(e) => {
-                                        inputRef.current.value = ingredient.name;
+                                        inputIngredientNameRef.current.value = ingredient.name;
                                         nameAfterClickHandler(ingredient.name);
-                                        setSearchIngredients([])
+                                        setSearchIngredients([]);
+                                        focusOnGrams();
                                     }}
                                     className="list-group-item btn-outline-success search-ingredient">
                                     <b>{ingredient.name}</b> {ingredientInfo(ingredient)}
@@ -103,7 +94,7 @@ const IngredientSimpleComponent = (props: any) => {
                         }})}
                 </ul>
                 </div>
-                <input id="grams" type="number"  autoComplete="off" className="form-control dupa" placeholder={props.grams.toString() + "g"}
+                <input id="grams" ref={inputIngredientGramsRef} type="number"  autoComplete="off" className="form-control dupa" placeholder={props.grams.toString() + "g"}
                               onChange={gramsChangeHandler} step="1"/>
             </div>
         }
