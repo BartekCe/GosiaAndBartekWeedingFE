@@ -73,7 +73,6 @@ const UserData = (user: any) => {
         let url = `${useUrl}/week/get/${user.dayId}`;
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data)
         setWeekData({
             currentCalories: data.currentCalories,
             weeklyCaloriesIntake: data.weeklyCaloriesIntake,

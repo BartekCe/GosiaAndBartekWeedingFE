@@ -1,13 +1,6 @@
 .upperMenu {
-    min-height: 30px;
-    height: 100%;
-    padding: 0 1rem;
+    /*min-height: 30px;*/
+    /*height: 100%;*/
+    /*padding: 0 1rem;*/
     /*position: relative;*/
-}
-
-.upperMenu-nav{
-    max-width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-start;
 }

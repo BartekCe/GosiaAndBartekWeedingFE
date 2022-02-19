@@ -137,7 +137,7 @@ const DayOfEatingComponent = (props: any) => {
             {/*</div>*/}
             <div className="container">
                 {dayOfEating.meals.map((mealFromBE, index) =>
-                    <div className="col">
+                    <div className="col" key={index}>
                         <Meal
                             key={mealFromBE.id}
                             onMealSave={updateStats}
@@ -155,7 +155,7 @@ const DayOfEatingComponent = (props: any) => {
                 )}
             </div>
             <span
-                className="info">Calories: {dayStats.calories} / {props.dailyCalories} Proteins: {dayStats.protein} Fat: {dayStats.fat} Carbohydrate: {dayStats.carbohydrate}  </span>
+                className="dayInfo">Calories: {dayStats.calories} / {props.dailyCalories} Proteins: {Math.round(dayStats.protein)} Fat: {Math.round(dayStats.fat)} Carbohydrate: {Math.round(dayStats.carbohydrate)}  </span>
             <ProgressBar
                 className="rounded-pill"
                 variant={getProgressBarVariant(dayStats.calories, props.dailyCalories)}

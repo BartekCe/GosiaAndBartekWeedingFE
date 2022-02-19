@@ -1,7 +1,8 @@
 .ingredientForm {
     max-width: 220px;
     max-height: 200px;
-    display: inherit;
+    z-index: 1;
+    position: absolute;
 }
 
 ul {

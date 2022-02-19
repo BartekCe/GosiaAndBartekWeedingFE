@@ -2,6 +2,11 @@
 display: flex;
     /*position: absolute;*/
 }
+.ingredientList{
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+}
 
 /*.mylist {*/
 /*    position: absolute;*/
